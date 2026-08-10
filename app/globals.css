@@ -168,6 +168,27 @@ button:disabled {
   line-height: 1.5;
 }
 
+/*AUTHORIZATION*/
+.auth__wrapper {
+  background-color: rgba(0, 0, 0,0.5);
+}
+
+.auth {
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth__close-btn {
+  font-size: 1.25rem;
+}
+
+.auth__forgot-password,
+.auth__switch-btn {
+  color: #2bd97c;
+  background: none;
+  border: none;
+}
+
 /* FEATURES */
 .features__wrapper {
   display: grid;

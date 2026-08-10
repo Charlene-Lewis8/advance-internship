@@ -1,4 +1,4 @@
-import CombinedHome from "./components/CombinedHome";
+import CombinedHome from "../components/CombinedHome";
 
 export default function Home() {
   return(
