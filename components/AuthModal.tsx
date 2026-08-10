@@ -13,6 +13,8 @@ import {
 } from 'firebase/auth';
 import { auth, googleProvider } from '@/firebase/firebase';
 import { IoClose } from 'react-icons/io5';
+import Image from 'next/image';
+import googleLogo from '@/public/google.png';
 
 export default function AuthModal() {
     const dispatch = useDispatch();
@@ -78,18 +80,18 @@ export default function AuthModal() {
 
   return (
     <div className="auth__wrapper fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="auth relative w-full max-w-100 bg-white rounded-lg p-8 shadow-xl flex flex-col items-center">
+      <div className="auth relative w-full max-w-[400px] bg-white rounded-lg p-8 shadow-xl flex flex-col items-center">
         {/* cspell:ignore Summarist */}
         <button
           type="button"
           aria-label="Close authentication modal"
-          className="auth__close-button absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-black"
+          className="auth__close-button absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-black"
           onClick={() => dispatch(closeModal())}
         >
           <IoClose size={22} />
         </button>
 
-        <h2 className="text-xl font-bold text-[#032b41] mb-6">
+        <h2 className="text-2xl font-bold-800 text-[#032b41]">
           {view === 'login' ? 'Log in to Summarist' : 'Sign up for Summarist'}
         </h2>
 
@@ -118,18 +120,20 @@ export default function AuthModal() {
             className="flex items-center justify-center gap-3 w-full py-2.5 px-4 bg-[#4285f4] hover:bg-[#3367d6] text-white font-medium text-sm rounded transition"
           >
             <div className="bg-white p-1 rounded flex items-center justify-center">
-              <span className="text-sm">G</span>
+              <Image src={googleLogo} alt="Google logo" width={16} height={16} />
             </div>
-            Continue with Google
+            Login with Google
           </button>
 
-          <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 pt-2">
+          <div className="text-center text-xs text-gray-400 font-medium my-1">or</div>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#3a57e8]"
+              className="w-full p-2.5 border border-gray-300 text-sm outline-none  focus:border-[#2bd97c]"
               required
             />
 
@@ -138,33 +142,34 @@ export default function AuthModal() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="w-full rounded border border-gray-300 px-3 py-2 text-sm outline-none focus:border-[#3a57e8]"
+              className="w-full p-2.5 border border-gray-300 text-sm outline-none  focus:border-[#2bd97c]"
               required
             />
 
             <button
               type="submit"
-              className="w-full rounded bg-[#032b41] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#021f31] transition"
+              className="w-full py-2.5 bg-[#2bd97c] hover:bg-[#20bd6a] text-[#032b41] font-bold text-sm rounded mt-1 transition"
             >
               {view === 'login' ? 'Log in' : 'Create account'}
             </button>
+            </form>
 
-            <button
-              type="button"
+            {view === 'login' && (
+              <div
               onClick={handleForgotPassword}
-              className="text-xs text-[#032b41] underline underline-offset-2 hover:text-[#021f31]"
-            >
-              Forgot password?
-            </button>
-
+              className="auth__forgot-password text-center text-xs text-blue-500 hover:underline cursor-pointer mt-2">
+                Forgot password?
+              </div>
+            )}
             <button
-              type="button"
-              onClick={() => dispatch(switchView(view === 'login' ? 'signup' : 'login'))}
-              className="text-xs text-gray-500"
-            >
-              {view === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Log in'}
+            onClick={() => {
+              setError('');
+              setResetSent(false);
+              dispatch(switchView(view === 'login' ? 'signup' : 'login'));
+            }}
+            className="auth__switch-btn text-center text-xs text-blue-500 hover:underline cursor-pointer mt-1">
+              {view === 'login' ? "Don't have an account?" : "Already have an account?"}
             </button>
-          </form>
         </div>
       </div>
     </div>

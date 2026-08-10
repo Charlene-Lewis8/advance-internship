@@ -1,6 +1,14 @@
+'use client';
+
+import { useDispatch} from 'react-redux';
+import { openModal } from '@/redux/authModalSlice';
+
 import Image from "next/image";
 
 export default function LandingSection() {
+const dispatch = useDispatch();
+
+
   return (
     <section id="landing">
       <div className="container">
@@ -18,7 +26,10 @@ export default function LandingSection() {
                 <br className="remove--tablet" />
                 and even people who don’t like to read.
               </div>
-              <button className="btn home__cta--btn">Login</button>
+              <button 
+              className="btn home__cta--btn" onClick={() => dispatch(openModal('login'))}>
+                Login
+              </button>
             </div>
             <figure className="landing__image--mask">
               <Image

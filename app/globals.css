@@ -22,11 +22,11 @@ ul {
   list-style: none;
 }
 
-button {
-  cursor: pointer;
-  outline: none;
-  border: none;
-  background-color: transparent;
+.auth {
+  padding: 48px 32px 24px;
+}
+.auth h2 {
+  margin-bottom: 24px;
 }
 
 button:active {
@@ -166,27 +166,6 @@ button:disabled {
   font-weight: 300;
   margin-bottom: 24px;
   line-height: 1.5;
-}
-
-/*AUTHORIZATION*/
-.auth__wrapper {
-  background-color: rgba(0, 0, 0,0.5);
-}
-
-.auth {
-  max-width: 400px;
-  width: 100%;
-}
-
-.auth__close-btn {
-  font-size: 1.25rem;
-}
-
-.auth__forgot-password,
-.auth__switch-btn {
-  color: #2bd97c;
-  background: none;
-  border: none;
 }
 
 /* FEATURES */
