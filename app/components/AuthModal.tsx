@@ -12,7 +12,7 @@ import {
     sendPasswordResetEmail
 } from 'firebase/auth';
 import { auth, googleProvider } from '@/firebase/firebase';
-import Image from 'next/image';
+import { IoClose } from 'react-icons/io5';
 
 export default function AuthModal() {
     const dispatch = useDispatch();
@@ -77,8 +77,35 @@ export default function AuthModal() {
  };
 
  return(  
+    <div className="auth__wrapper fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div className="auth relative w-full max-w-[400px] bg-white rounded-lg p-8 shadow-xl flex flex-col items-center">
+            <button
+                type="button"
+                aria-label="Close authentication modal"
+                className="auth__close-button absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-black"
+                onClick={() => dispatch(closeModal())}
+            >
+                <IoClose size={22} />
+            </button>
+        </div>
+        <h2 className="text-xl font-bold text-[#032b41] mb-6">
+            {view === 'login' ? 'Log in to Summarist' : 'Sign up for Summarist'}
+        </h2>
+
+        {error && <p className="text-xs text-red-500 mb-3 text-center">{error}</p>}
+        {resetSent && <p className="text-xs text-green-600 mb-3 text-center">Password reset link sent to your email!</p>}
+
+        <div className="auth__content w-full flex flex-col gap-3">
+            <button
+            onClick={handleGuestLogin} 
+            className="flex items-center justify-center gap-3 w-full py-2.5 px-4 bg-[#3a57e8] hover:bg-[#2f47c3] text-white font-medium text-sm rounded transition">
+                <span className="text-lg">👤</span>Login as a Guest
+            </button>
+           <div className="text-center text-xs text-gray-400 font-medium my-1">or</div> 
+       
 
 
-
-    //finish adding the modal with the form and buttons for login, register, guest login, google login, and password reset
- )}
+        </div>
+    </div>  
+ );
+}
