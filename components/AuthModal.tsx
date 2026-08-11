@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { closeModal, switchView} from '@/redux/authModalSlice';
@@ -56,10 +56,23 @@ export default function AuthModal() {
     //Login with Google
     const handleGoogleLogin = async () => {
     try {
-        await signInWithPopup(auth, googleProvider);
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+        console.log('Successfully logged in with Google:', user.displayName);
         dispatch(closeModal());
     } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        const firebaseError = err as { code?: string; message?: string };
+        const code = firebaseError.code ?? '';
+
+        if (code === 'auth/popup-closed-by-user') {
+          setError('Login window was closed before completing. Please try again.');
+        } else {
+          setError(
+            err instanceof Error
+              ? err.message
+              : firebaseError.message || 'Failed to sign in with Google. Please try again.'
+          );
+        }
     }
  };
 
@@ -80,24 +93,24 @@ export default function AuthModal() {
 
   return (
     <div className="auth__wrapper fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="auth relative w-full max-w-[400px] bg-white rounded-lg p-8 shadow-xl flex flex-col items-center">
+      <div className="auth relative w-full max-w-120 bg-white rounded-lg p-10 shadow-2xl flex flex-col items-center">
         {/* cspell:ignore Summarist */}
         <button
           type="button"
           aria-label="Close authentication modal"
-          className="auth__close-button absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-black"
+          className="auth__close-button absolute top-5 right-5 cursor-pointer text-gray-400 hover:text-black-700 transition"
           onClick={() => dispatch(closeModal())}
         >
           <IoClose size={22} />
         </button>
 
-        <h2 className="text-2xl font-bold-800 text-[#032b41]">
+        <h2 className="text-2xl font-bold-800 text-[#032b41] text-center">
           {view === 'login' ? 'Log in to Summarist' : 'Sign up for Summarist'}
         </h2>
 
-        {error && <p className="text-xs text-red-500 mb-3 text-center">{error}</p>}
+        {error && <p className="text-xs text-red-500 mb-4 text-center">{error}</p>}
         {resetSent && (
-          <p className="text-xs text-green-600 mb-3 text-center">
+          <p className="text-xs text-green-600 mb-4 text-center">
             Password reset link sent to your email!
           </p>
         )}
@@ -106,34 +119,34 @@ export default function AuthModal() {
           <button
             type="button"
             onClick={handleGuestLogin}
-            className="flex items-center justify-center gap-3 w-full py-2.5 px-4 bg-[#3a57e8] hover:bg-[#2f47c3] text-white font-medium text-sm rounded transition"
+            className="relative flex items-center justify-center w-full h-11.5 py-2.5 px-4 bg-[#3a57e8] hover:bg-[#2f47c3] text-white font-medium text-sm rounded transition overflow-hidden"
           >
-            <span className="text-lg">👤</span>
-            Login as a Guest
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 w-12.5 h-[calc(100%-12px)] flex items-center justify-center bg-black/10 text-lg rounded">👤</span>
+            <span className="text-lg">Login as a Guest</span>
           </button>
 
-          <div className="text-center text-xs text-gray-400 font-medium my-1">or</div>
+          <div className="text-center text-sm text-gray-400 font-medium my-1">or</div>
 
           <button
             type="button"
             onClick={handleGoogleLogin}
-            className="flex items-center justify-center gap-3 w-full py-2.5 px-4 bg-[#4285f4] hover:bg-[#3367d6] text-white font-medium text-sm rounded transition"
+            className="relative flex items-center justify-center w-full h-11.5 py-2.5 px-4 bg-[#4285f4] hover:bg-[#3367d6] text-white font-medium text-sm rounded transition overflow-hidden border border-[#4285f4]"
           >
-            <div className="bg-white p-1 rounded flex items-center justify-center">
-              <Image src={googleLogo} alt="Google logo" width={16} height={16} />
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 w-12.5 h-[calc(100%-12px)] flex items-center justify-center bg-white p-1 rounded">
+              <Image src={googleLogo} alt="Google logo" width={20} height={20} />
             </div>
-            Login with Google
+            <span className="text-lg">Login with Google</span>
           </button>
 
           <div className="text-center text-xs text-gray-400 font-medium my-1">or</div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className="w-full p-2.5 border border-gray-300 text-sm outline-none  focus:border-[#2bd97c]"
+              className="w-full h-11 px-4 rounded border border-gray-300 text-sm outline-none focus:border-[#2bd97c]"
               required
             />
 
@@ -142,13 +155,13 @@ export default function AuthModal() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="w-full p-2.5 border border-gray-300 text-sm outline-none  focus:border-[#2bd97c]"
+              className="w-full h-11 px-4 rounded border border-gray-300 text-sm outline-none focus:border-[#2bd97c]"
               required
             />
 
             <button
               type="submit"
-              className="w-full py-2.5 bg-[#2bd97c] hover:bg-[#20bd6a] text-[#032b41] font-bold text-sm rounded mt-1 transition"
+              className="w-full h-11 bg-[#2bd97c] hover:bg-[#20bd6a] text-white font-medium text-sm rounded mt-2 transition"
             >
               {view === 'login' ? 'Log in' : 'Create account'}
             </button>
@@ -157,7 +170,7 @@ export default function AuthModal() {
             {view === 'login' && (
               <div
               onClick={handleForgotPassword}
-              className="auth__forgot-password text-center text-xs text-blue-500 hover:underline cursor-pointer mt-2">
+              className="auth__forgot-password text-center text-sm text-blue-500 hover:underline cursor-pointer mt-2">
                 Forgot password?
               </div>
             )}
@@ -167,7 +180,7 @@ export default function AuthModal() {
               setResetSent(false);
               dispatch(switchView(view === 'login' ? 'signup' : 'login'));
             }}
-            className="auth__switch-btn text-center text-xs text-blue-500 hover:underline cursor-pointer mt-1">
+            className="auth__switch-btn text-center text-sm text-blue-500 hover:underline cursor-pointer mt-1">
               {view === 'login' ? "Don't have an account?" : "Already have an account?"}
             </button>
         </div>
