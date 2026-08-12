@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { closeModal, switchView} from '@/redux/authModalSlice';
@@ -18,6 +19,7 @@ import googleLogo from '@/public/google.png';
 
 export default function AuthModal() {
     const dispatch = useDispatch();
+    const router = useRouter();
     const { isOpen, view } = useSelector((state: RootState) => state.authModal);
     
     const [email, setEmail] = useState('');
@@ -37,6 +39,7 @@ export default function AuthModal() {
             } else {
                 await createUserWithEmailAndPassword(auth, email, password);
             }
+            router.push('/for-you');
             dispatch(closeModal());
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : 'An error occurred');
@@ -47,6 +50,7 @@ export default function AuthModal() {
     const handleGuestLogin = async () => {
         try {
             await signInAnonymously(auth);
+            router.push('/for-you');
             dispatch(closeModal());
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : 'An error occurred');
@@ -59,6 +63,7 @@ export default function AuthModal() {
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
         console.log('Successfully logged in with Google:', user.displayName);
+        router.push('/for-you')
         dispatch(closeModal());
     } catch (err: unknown) {
         const firebaseError = err as { code?: string; message?: string };

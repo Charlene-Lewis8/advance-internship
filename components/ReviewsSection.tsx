@@ -72,7 +72,7 @@ const dispatch = useDispatch();
           <div className="reviews__btn--wrapper">
             <button 
             onClick={() => dispatch(openModal('login'))}
-            className="btn home__cta--btn">Login</button>
+            className="btn home__cta--btn cursor-pointer">Login</button>
           </div>
         </div>
       </div>

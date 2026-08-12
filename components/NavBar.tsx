@@ -1,8 +1,12 @@
 
+'use client';
+
+import { useDispatch } from 'react-redux';
 import Image from "next/image";
+import { openModal } from '@/redux/authModalSlice';
 
 export default function NavBar() {
-  
+  const dispatch = useDispatch();
 
   return (
     <nav className="nav">
@@ -12,12 +16,16 @@ export default function NavBar() {
             className="nav__img"
             src="/logo.png"
             alt="Summarist logo"
-            width={150}
-            height={150}
+            width={200}
+            height={200}
           />
         </figure>
         <ul className="nav__list--wrapper">
-          <li className="nav__list nav__list--login">Login</li>
+          <li className="nav__list nav__list--login">
+            <button type="button" onClick={() => dispatch(openModal('login'))}>
+              Login
+            </button>
+          </li>
           <li className="nav__list nav__list--mobile">About</li>
           <li className="nav__list nav__list--mobile">Contact</li>
           <li className="nav__list nav__list--mobile">Help</li>

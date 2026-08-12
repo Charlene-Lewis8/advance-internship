@@ -1,6 +1,39 @@
+'use client';
+
+import { useEffect, useState } from "react";
 import { AiFillAudio, AiFillBulb, AiFillFileText } from "react-icons/ai";
 
+const leftHeadings = [
+  "Enhance your knowledge",
+  "Achieve greater success",
+  "Improve your health",
+  "Develop better parenting skills",
+  "Increase happiness",
+  "Be the best version of yourself!",
+];
+
+const rightHeadings = [
+  "Expand your learning",
+  "Accomplish your goals",
+  "Strengthen your vitality",
+  "Become a better caregiver",
+  "Improve your mood",
+  "Maximize your abilities",
+];
+
 export default function FeaturesSection() {
+  const [activeLeftIndex, setActiveLeftIndex] = useState(0);
+  const [activeRightIndex, setActiveRightIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveLeftIndex((prev) => (prev + 1) % leftHeadings.length);
+      setActiveRightIndex((prev) => (prev + 1) % rightHeadings.length);
+    }, 1200);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="features">
       <div className="container">
@@ -37,16 +70,14 @@ export default function FeaturesSection() {
           </div>
           <div className="statistics__wrapper">
             <div className="statistics__content--header">
-              <div className="statistics__heading">Enhance your knowledge</div>
-              <div className="statistics__heading">Achieve greater success</div>
-              <div className="statistics__heading">Improve your health</div>
-              <div className="statistics__heading">
-                Develop better parenting skills
-              </div>
-              <div className="statistics__heading">Increase happiness</div>
-              <div className="statistics__heading">
-                Be the best version of yourself!
-              </div>
+              {leftHeadings.map((heading, index) => (
+                <div
+                  key={heading}
+                  className={`statistics__heading ${activeLeftIndex === index ? "statistics__heading--active" : ""}`}
+                >
+                  {heading}
+                </div>
+              ))}
             </div>
             <div className="statistics__content--details">
               <div className="statistics__data">
@@ -95,12 +126,14 @@ export default function FeaturesSection() {
               </div>
             </div>
             <div className="statistics__content--header statistics__content--header-second">
-              <div className="statistics__heading">Expand your learning</div>
-              <div className="statistics__heading">Accomplish your goals</div>
-              <div className="statistics__heading">Strengthen your vitality</div>
-              <div className="statistics__heading">Become a better caregiver</div>
-              <div className="statistics__heading">Improve your mood</div>
-              <div className="statistics__heading">Maximize your abilities</div>
+              {rightHeadings.map((heading, index) => (
+                <div
+                  key={heading}
+                  className={`statistics__heading ${activeRightIndex === index ? "statistics__heading--active" : ""}`}
+                >
+                  {heading}
+                </div>
+              ))}
             </div>
           </div>
         </div>

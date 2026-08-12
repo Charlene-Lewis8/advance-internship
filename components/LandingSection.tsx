@@ -27,7 +27,7 @@ const dispatch = useDispatch();
                 and even people who don’t like to read.
               </div>
               <button 
-              className="btn home__cta--btn" onClick={() => dispatch(openModal('login'))}>
+              className="btn home__cta--btn cursor-pointer" onClick={() => dispatch(openModal('login'))}>
                 Login
               </button>
             </div>
