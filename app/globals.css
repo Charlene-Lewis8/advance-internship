@@ -633,8 +633,55 @@ button:disabled {
   margin: 0 auto;
 }
 
+.sidebar__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 60px);
+  padding-bottom: 20px;
+  overflow-y: auto;
+}
 
+.sidebar__top {
+  flex: 1 1;
+  margin-top: 40px;
+}
 
+.sidebar__link--wrapper {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  color: #032b41;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.sidebar__link--not-allowed {
+  cursor: not-allowed;
+}
+
+.sidebar__link--line {
+  width: 5px;
+  height: 100%;
+  background-color: transparent;
+  margin-right: 16px;
+}
+
+.active--tab {
+  background-color: #2bd97c;
+}
+
+.sidebar__icon--wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.sidebar__icon--wrapper svg {
+  width: 24px;
+  height: 24px;
+}
 
 
 
