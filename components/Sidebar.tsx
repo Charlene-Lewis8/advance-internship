@@ -63,8 +63,37 @@ export default function Sidebar() {
                 </nav>
             </div>
             <div className="p-6 border-t border-gray-100 space-y-4">
-                
+                <nav className="space-y-1">
+                {secondaryNavItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = pathname === item.href;
+
+                    return (
+                        <Link 
+                        key={item.href}
+                        href={item.href}
+                        className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                            isActive
+                            ? "bg-emerald-50 text-emerald-600"
+                            : "text-gray-600 hover:bg-gray-100 hover: text-gray-900"
+                        }`}
+                        >
+                            <Icon className={`w-5 h-5 ${isActive ? "text-emerald-600" : "text-gray-500"}`} />
+                            <span>{item.label}</span>
+                        </Link>
+                    );
+                })}
+                </nav> 
+                <button
+                onClick={() => {
+                    console.log("Open Auth Modal");
+                }}
+                className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors">
+                <LogOut className="w-5 h-5 text-gray-500 group-hover:text-red-600" />
+                <span>Log In</span>   
+                </button> 
             </div>
+
         </aside>
-    )
+    );
 }
