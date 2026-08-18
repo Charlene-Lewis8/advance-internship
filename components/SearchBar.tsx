@@ -10,7 +10,7 @@ interface SearchBarProps {
 
 export default function SearchBar({
     onSearch,
-    placeholder = "Search for books or authors...",
+    placeholder = "Search for books",
 }: SearchBarProps) {
     
     const [query, setQuery] = useState("");
@@ -32,7 +32,7 @@ export default function SearchBar({
 
     return (
         <div className="relative w-full max-w-xl">
-            <div className="absolute inset-y-0 left-o pl-3 5 flex items-center pointer-events-none text-gray-400">
+            <div className="absolute inset-y-0 left-0 pl-3 5 flex items-center pointer-events-none text-gray-400">
                 <Search className="w-5 h-5" />             
             </div>
             <input 
@@ -40,7 +40,7 @@ export default function SearchBar({
             value={query}
             onChange={handleChange}
             placeholder={placeholder}
-            className="w-full pl-10 pr-10 py-2.5 bg-gray-100 border border-transparent rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all duration-200"
+            className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:bg-white focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all duration-200"
             />
             {query && (
                 <button
