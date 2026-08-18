@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
 import SearchBar from "@/components/SearchBar";
 import BookCard from "@/components/BookCard";
@@ -66,7 +67,9 @@ export default function ForYouPage() {
                                         <h3 className="text-lg font-bold text-gray-900">{selectedBook.title}</h3>
                                         <p className="text-sm text-gray-600">{selectedBook.author}</p>
                                     </div>
-                                    <img                                    
+                                    <Image
+                                    width={24}
+                                    height={32}                                    
                                     src={selectedBook.imageLink}
                                     alt={selectedBook.title}
                                     className="w-24 h-32 object-cover rounded-md shadow-md"
